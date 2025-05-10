@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kursovoi.controllers.ProductDetailsSellerController">
+    <!-- Основной контент -->
+    <center>
+        <HBox spacing="30" style="-fx-padding: 30; -fx-background-color: #ffffff; -fx-border-color: #e0e0e0; -fx-border-width: 1; -fx-border-radius: 10;">
+            <children>
+                <Button fx:id="backButton" text="Назад" onAction="#goBack"
+                        style="-fx-background-color: transparent; -fx-text-fill: black; -fx-font-size: 14px; -fx-cursor: hand;" />
+                <ImageView fx:id="productImage" fitWidth="350" fitHeight="350" preserveRatio="true"
+                           style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);" />
+                <VBox spacing="15" style="-fx-padding: 10;">
+                    <Label fx:id="productNameLabel" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+                    <Label fx:id="countryLabel" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;" />
+                    <Label fx:id="companyLabel" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d;" />
+                    <Label fx:id="categoriesLabel" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d; -fx-wrap-text: true;" />
+                    <Label fx:id="priceLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #27ae60;" />
+                    <Label fx:id="propertiesLabel" style="-fx-font-size: 16px; -fx-text-fill: #7f8c8d; -fx-wrap-text: true;" />
+                    <Button fx:id="addToCartButton" text="Добавить в корзину 🛒"
+                            onAction="#addToCart"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10 20; -fx-background-radius: 5; -fx-cursor: hand;" />
+                </VBox>
+            </children>
+        </HBox>
+    </center>
+
+    <!-- Нижняя панель кнопок -->
+    <bottom>
+        <HBox spacing="50.0" alignment="CENTER" style="-fx-background-color: #f0f0f0;">
+            <padding>
+                <Insets top="15.0" right="15.0" bottom="15.0" left="15.0"/>
+            </padding>
+            <children>
+                <VBox alignment="CENTER" spacing="5">
+                    <children>
+                        <ImageView fx:id="iconUser" fitHeight="24.0" fitWidth="24.0" />
+                        <Button fx:id="profileButton" text="Имя" onAction="#onProfileClick" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+                    </children>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="5">
+                    <children>
+                        <ImageView fx:id="iconOrders" fitHeight="24.0" fitWidth="24.0" />
+                        <Button fx:id="ordersButton" text="Заказы" onAction="#onOrdersClick" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+                    </children>
+                </VBox>
+
+                <VBox alignment="CENTER" spacing="5">
+                    <children>
+                        <ImageView fx:id="iconBasket" fitHeight="24.0" fitWidth="24.0" />
+                        <Button fx:id="basketButton" text="Корзина" onAction="#onBasketClick" style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

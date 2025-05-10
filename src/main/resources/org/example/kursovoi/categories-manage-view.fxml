@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: linear-gradient(to bottom right, #e0e7ff, #f7f9ff);" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.kursovoi.controllers.CategoriesManageController">
+    <!-- Central area: Categories list -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <content>
+                <VBox spacing="15" alignment="TOP_CENTER" style="-fx-padding: 20;">
+                    <!-- Input row for adding a new category -->
+                    <HBox fx:id="inputRow" spacing="20" alignment="CENTER" style="-fx-background-color: #f0f0f0; -fx-padding: 10; -fx-border-color: #ddd; -fx-border-width: 1; -fx-border-radius: 5;">
+                        <children>
+                            <TextField fx:id="inputName" promptText="Название" style="-fx-min-width: 200;" />
+                            <TextField fx:id="inputParentId" promptText="ID родительской категории" style="-fx-min-width: 200;" />
+                            <Button text="Добавить" onAction="#onAddCategory" style="-fx-background-color: #4a90e2; -fx-text-fill: #ffffff; -fx-font-size: 12px; -fx-cursor: hand;" />
+                        </children>
+                    </HBox>
+                    <!-- Categories list -->
+                    <VBox fx:id="categoriesList" spacing="15" alignment="TOP_CENTER" />
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <!-- Bottom navigation bar -->
+    <bottom>
+        <HBox spacing="50.0" alignment="CENTER" style="-fx-background-color: #f0f0f0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.3, 0, -2);">
+            <padding>
+                <Insets top="15.0" right="15.0" bottom="15.0" left="15.0"/>
+            </padding>
+            <children>
+                <VBox alignment="CENTER" spacing="5">
+                    <children>
+                        <ImageView fx:id="iconProducts" fitHeight="24.0" fitWidth="24.0" />
+                        <Button fx:id="productsButton" text="Таблица" onAction="#onProductsClick" style="-fx-background-color: transparent; -fx-text-fill: #2c3e50; -fx-font-size: 12px; -fx-cursor: hand;" />
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" spacing="5">
+                    <children>
+                        <ImageView fx:id="iconAnalytics" fitHeight="24.0" fitWidth="24.0" />
+                        <Button fx:id="analyticsButton" text="Аналитика" onAction="#onAnalyticsClick" style="-fx-background-color: transparent; -fx-text-fill: #2c3e50; -fx-font-size: 12px; -fx-cursor: hand;" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>
