@@ -48,7 +48,7 @@ public class Order {
 
     // Поле для продуктов
     @JsonIgnore
-    private List<Product> products = new ArrayList<>();
+    private List<OrderProduct> products = new ArrayList<>();
 
     private static List<Order> cachedOrders = new ArrayList<>();
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -85,7 +85,7 @@ public class Order {
         }
 
         HttpClient client = HttpClient.newHttpClient();
-        String url = "http://localhost:8080/receipts"; // Endpoint for all receipts
+        String url = "http://localhost:8080/receipts";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
@@ -96,26 +96,28 @@ public class Order {
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() == 200) {
-                // Deserialize JSON into List<Order> with ProductsWrapper
                 List<Order> rawOrders = objectMapper.readValue(response.body(), new TypeReference<>() {});
 
-                // Process each order to populate the products list
                 List<Product> allProducts = Product.getProducts();
                 for (Order order : rawOrders) {
                     ProductsWrapper wrapper = order.getProductsWrapper();
                     if (wrapper != null && wrapper.getValue() != null && !wrapper.isNull()) {
-                        // Parse the "value" string into a list of ReceiptProduct
                         List<ReceiptProduct> receiptProducts = objectMapper.readValue(
                                 wrapper.getValue(),
                                 new TypeReference<>() {}
                         );
 
-                        // Map id_product to Product objects from allProducts
-                        List<Product> orderProducts = receiptProducts.stream()
-                                .map(rp -> allProducts.stream()
-                                        .filter(p -> p.getId().equals(rp.getId_product()))
-                                        .findFirst()
-                                        .orElse(null))
+                        List<OrderProduct> orderProducts = receiptProducts.stream()
+                                .map(rp -> {
+                                    Product product = allProducts.stream()
+                                            .filter(p -> p.getId().equals(rp.getId_product()))
+                                            .findFirst()
+                                            .orElse(null);
+                                    if (product != null) {
+                                        return new OrderProduct(product, rp.getQuantity());
+                                    }
+                                    return null;
+                                })
                                 .filter(Objects::nonNull)
                                 .collect(Collectors.toList());
 
@@ -133,6 +135,7 @@ public class Order {
             cachedOrders = new ArrayList<>();
         }
     }
+
     public static void initializeUserOrders(String token, UserSession userSession) {
         if (token == null) return;
 
@@ -159,13 +162,11 @@ public class Order {
                 return;
             }
 
-            // Десериализуем заказы с уже готовыми продуктами внутри
             List<Order> rawOrders = objectMapper.readValue(
                     response.body(),
                     new TypeReference<List<Order>>() {}
             );
 
-            // Никаких доп. обработок не надо — продукты уже правильно пришли
             cachedOrders = rawOrders;
 
         } catch (Exception e) {

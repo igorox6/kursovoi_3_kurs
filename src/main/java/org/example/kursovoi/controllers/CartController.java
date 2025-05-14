@@ -106,7 +106,6 @@ public class CartController implements InitializableController {
 
         payButton.setDisable(false);
 
-        // Группируем товары по ID, чтобы посчитать количество каждого товара
         Map<Long, List<Product>> groupedProducts = userSession.getBuyer().getCart().stream()
                 .collect(Collectors.groupingBy(Product::getId));
 
@@ -200,7 +199,7 @@ public class CartController implements InitializableController {
         }
 
         userSession.getBuyer().makePurchase(userSession.getToken(), userSession.getBuyer().getId_buyer());
-        displayCartItems(); // Обновляем отображение после покупки
+        displayCartItems();
     }
 
     @FXML

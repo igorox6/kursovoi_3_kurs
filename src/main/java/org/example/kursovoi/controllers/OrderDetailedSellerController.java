@@ -10,10 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.kursovoi.Application;
 import org.example.kursovoi.classes.UserSession;
-import org.example.kursovoi.db_classes.Buyer;
-import org.example.kursovoi.db_classes.Order;
-import org.example.kursovoi.db_classes.Product;
-import org.example.kursovoi.db_classes.Worker;
+import org.example.kursovoi.db_classes.*;
 import org.example.kursovoi.interfases.InitializableController;
 
 import java.net.URL;
@@ -85,7 +82,6 @@ public class OrderDetailedSellerController implements InitializableController {
             return;
         }
 
-        // Формат даты
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 
         String buyerInfo = "Покупатель: Неизвестен";
@@ -97,12 +93,9 @@ public class OrderDetailedSellerController implements InitializableController {
                     .orElse(null);
             if (buyer != null) {
                 buyerInfo = "Покупатель: " + buyer.getName() + " " + buyer.getLastname();
-            } else {
-                System.out.println("Buyer not found for ID: " + currentOrder.getIdBuyer());
             }
         }
 
-        // Собираем строку заказа
         String orderInfo = String.format(
                 "Заказ #%d - Дата: %s - %s - Сумма: %.2f руб.",
                 currentOrder.getId(),
@@ -113,8 +106,8 @@ public class OrderDetailedSellerController implements InitializableController {
 
         orderInfoLabel.setText(orderInfo);
 
-        java.util.List<Product> products = currentOrder.getProducts();
-        if (products == null || products.isEmpty()) {
+        List<OrderProduct> orderProducts = currentOrder.getProducts();
+        if (orderProducts == null || orderProducts.isEmpty()) {
             Label emptyLabel = new Label("Нет продуктов в заказе");
             emptyLabel.setStyle("-fx-font-size: 16; -fx-padding: 20;");
             productsList.getChildren().add(emptyLabel);
@@ -125,12 +118,9 @@ public class OrderDetailedSellerController implements InitializableController {
         payButton.setDisable(false);
         productsList.getChildren().clear();
 
-        Map<Long, java.util.List<Product>> groupedProducts = products.stream()
-                .collect(Collectors.groupingBy(Product::getId));
-
-        for (Map.Entry<Long, java.util.List<Product>> entry : groupedProducts.entrySet()) {
-            Product product = entry.getValue().get(0);
-            int quantity = entry.getValue().size();
+        for (OrderProduct orderProduct : orderProducts) {
+            Product product = orderProduct.getProduct();
+            int quantity = orderProduct.getQuantity();
             long totalCost = product.getCost() * quantity;
 
             HBox productBox = new HBox(10);

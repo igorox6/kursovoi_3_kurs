@@ -43,7 +43,6 @@ public class AdminPanelController implements InitializableController, Initializa
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Инициализация картинок с проверкой на null
         if (iconProducts != null) {
             try {
                 Image productsImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/products.png")));
