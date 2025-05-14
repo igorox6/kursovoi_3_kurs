@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.kursovoi.Application;
+import org.example.kursovoi.classes.OrderProduct;
 import org.example.kursovoi.classes.UserSession;
 import org.example.kursovoi.db_classes.*;
 import org.example.kursovoi.interfases.InitializableController;
@@ -16,10 +17,8 @@ import org.example.kursovoi.interfases.InitializableController;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class OrderDetailedSellerController implements InitializableController {
 

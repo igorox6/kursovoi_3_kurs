@@ -5,7 +5,6 @@ module org.example.kursovoi {
     requires com.google.gson;
     requires static lombok;
     requires com.fasterxml.jackson.databind;
-    opens org.example.kursovoi.classes to com.fasterxml.jackson.databind;
 
     opens org.example.kursovoi to com.google.gson, javafx.fxml;
 
@@ -19,4 +18,5 @@ module org.example.kursovoi {
     exports org.example.kursovoi.db_classes;
     exports org.example.kursovoi.controllers;
     exports org.example.kursovoi.pojo to com.fasterxml.jackson.databind;
+    opens org.example.kursovoi.classes to com.fasterxml.jackson.databind, com.google.gson, javafx.fxml;
 }
